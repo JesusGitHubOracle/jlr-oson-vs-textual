@@ -126,11 +126,10 @@ Or open [`oson_4k_loader/benchmark_oson_vs_text.sql`](oson_4k_loader/benchmark_o
 The benchmark:
 
 - Builds `PO_JSON_TEXT_OVER_4K` by serializing the same OSON documents to textual JSON.
-- Creates matching `JSON_VALUE` indexes and gathers optimizer statistics.
+- Creates the relational view over `PO_OSON_OVER_4K`.
+- Creates  `JSON_VALUE` indexes and gathers optimizer statistics.
 - Measures multi-field `JSON_VALUE` projection, `JSON_TABLE` line-item expansion, and a full-document `JSON_TRANSFORM` update.
 - Prints elapsed milliseconds per execution and the OSON benefit relative to text JSON.
-
-The update test rolls its data changes back before the next test; the benchmark's setup tables and indexes remain afterward for inspection. Each rerun replaces `PO_JSON_TEXT_OVER_4K` and `PO_JSON_BENCHMARK_RESULTS`, recreates the OSON predicate indexes, and replaces the relational view `PO_OSON_OVER_4K_RELATIONAL_V`.
 
 Sample output:
 
