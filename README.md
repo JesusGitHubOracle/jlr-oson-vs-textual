@@ -132,6 +132,19 @@ The benchmark:
 
 The update test rolls its data changes back before the next test; the benchmark's setup tables and indexes remain afterward for inspection. Each rerun replaces `PO_JSON_TEXT_OVER_4K` and `PO_JSON_BENCHMARK_RESULTS`, recreates the OSON predicate indexes, and replaces the relational view `PO_OSON_OVER_4K_RELATIONAL_V`.
 
+Sample output:
+
+```text
+=== OSON versus Text BLOB benchmark results ===
+
+                                                                            OSON  Text BLOB                   OSON   Text BLOB Text - OSON OSON benefit
+Use case                         Measure                                      Result     Result Executions     ms/exec     ms/exec     ms/exec    % vs Text
+-------------------------------- ---------------------------------------- ---------- ---------- ---------- ----------- ----------- ----------- ------------
+Efficient random access          UPDATE all LineItems UnitPrice +10%           10000      10000          1     1950.00     2210.00      260.00        11.76
+Faster path evaluation           Multiple JSON_VALUE projection             93506560   93506560        100       70.80      112.20       41.40        36.90
+Server-side SQL/JSON operations  JSON_TABLE LineItems expansion                45260      45260        100       61.00      140.70       79.70        56.65
+```
+
 ## Optional cleanup
 
 After reviewing the results, remove the derived objects if they are no longer needed:
