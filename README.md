@@ -1,6 +1,6 @@
 # Oracle OSON vs. Text JSON Benchmark
 
-This repository compares Oracle Binary JSON (OSON) with UTF-8 textual JSON stored in `BLOB` columns. The included dataset is a 20 GiB NDJSON file containing 3,957,243 purchase-order documents, each larger than 4 KB.
+This repository benchmarks Oracle Binary JSON (OSON) against UTF-8 textual JSON stored in `BLOB` columns. The linked NDJSON dataset contains 10,000 purchase-order documents, each larger than 4 KB.
 
 The workflow is:
 
@@ -10,7 +10,7 @@ The workflow is:
 
 ## Prerequisites
 
-- An Oracle Database environment that supports `JSON FORMAT OSON` (the scripts were prepared for Oracle Database 19c).
+- An Oracle AI Database 19c or later
 - Python 3.8 or later.
 - The Python `oracledb` driver:
 
@@ -24,7 +24,19 @@ For databases that require Oracle Native Network Encryption, install a matching 
 
 ## 1. Create the OSON table
 
-Connect as the benchmark user in SQL*Plus, SQLcl, SQL Developer, or a comparable Oracle SQL client and run:
+Connect as the benchmark user in SQL*Plus, SQLcl, SQL Developer, or a comparable Oracle SQL client.
+
+If your Oracle Database version is 26ai or later, use the native `JSON` datatype:
+
+```sql
+CREATE TABLE po_oson_over_4k (
+  po_number  NUMBER NOT NULL,
+  attributes JSON NOT NULL,
+  CONSTRAINT po_oson_over_4k_pk PRIMARY KEY (po_number)
+);
+```
+
+If your Oracle Database is 19c, use a `BLOB` constrained to OSON:
 
 ```sql
 CREATE TABLE po_oson_over_4k (
@@ -64,7 +76,7 @@ python3 oson_4k_loader/load_oson_ndjson.py \
 The loader converts every NDJSON document to OSON on the client and inserts it into `PO_OSON_OVER_4K`. It commits every 100 rows by default. A successful run ends with:
 
 ```text
-Loaded 3957243 OSON documents into PO_OSON_OVER_4K.
+Loaded 10000 OSON documents into PO_OSON_OVER_4K.
 ```
 
 Use a TNS alias instead of an Easy Connect string when appropriate:
