@@ -52,7 +52,7 @@ The table must be empty before the initial load. The dataset uses `PONumber` val
 
 ## 2. Load the dataset as OSON
 
-From the repository root, run the loader. It prompts for the password, so do not put a password on the command line or commit one to the repository.
+From the repository root, run the loader. It prompts for the password.
 
 If the dataset is not already available locally, download it with either `curl` or `wget`:
 
@@ -131,7 +131,7 @@ The benchmark:
 - Measures multi-field `JSON_VALUE` projection, `JSON_TABLE` line-item expansion, and a full-document `JSON_TRANSFORM` update.
 - Prints elapsed milliseconds per execution and the OSON benefit relative to text JSON.
 
-Sample output:
+Sample output (scroll to the right for the comparison):
 
 ```text
 === OSON versus Text BLOB benchmark results ===
@@ -143,6 +143,15 @@ Efficient random access          UPDATE all LineItems UnitPrice +10%           1
 Faster path evaluation           Multiple JSON_VALUE projection             93506560   93506560        100       70.80      112.20       41.40        36.90
 Server-side SQL/JSON operations  JSON_TABLE LineItems expansion                45260      45260        100       61.00      140.70       79.70        56.65
 ```
+
+Column guide:
+
+- **Use case** and **Measure** identify the operation being tested.
+- **OSON Result** and **Text BLOB Result** are the logical results returned by each storage format; they should match.
+- **Executions** is the number of timed repetitions used to calculate the averages.
+- **OSON ms/exec** and **Text BLOB ms/exec** are the average elapsed milliseconds per execution.
+- **Text - OSON ms/exec** is the time saved by OSON; a positive value means OSON was faster.
+- **OSON benefit % vs Text** is the percentage reduction in average elapsed time for OSON relative to text JSON.
 
 ## Optional cleanup
 
