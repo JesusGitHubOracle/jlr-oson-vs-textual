@@ -42,6 +42,18 @@ The table must be empty before the initial load. The dataset uses `PONumber` val
 
 From the repository root, run the loader. It prompts for the password, so do not put a password on the command line or commit one to the repository.
 
+If the dataset is not already available locally, download it with either `curl` or `wget`:
+
+```bash
+curl -L -o oson_4k_loader/purchase_orders_over_4k.ndjson \
+  'https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/ftNtV_-et7KNxeC3otmIY8hQRexb3Fm5uPBxt_04fMin7XnVxY2knO_zek2ucaW3/n/fro8fl9kuqli/b/bucket-for-ajd-data/o/purchase_orders_over_4k.ndjson'
+```
+
+```bash
+wget -O oson_4k_loader/purchase_orders_over_4k.ndjson \
+  'https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/ftNtV_-et7KNxeC3otmIY8hQRexb3Fm5uPBxt_04fMin7XnVxY2knO_zek2ucaW3/n/fro8fl9kuqli/b/bucket-for-ajd-data/o/purchase_orders_over_4k.ndjson'
+```
+
 ```bash
 python3 oson_4k_loader/load_oson_ndjson.py \
   oson_4k_loader/purchase_orders_over_4k.ndjson \
