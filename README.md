@@ -131,7 +131,7 @@ The benchmark:
 - Measures multi-field `JSON_VALUE` projection, `JSON_TABLE` line-item expansion, and a full-document `JSON_TRANSFORM` update.
 - Prints elapsed milliseconds per execution and the OSON benefit relative to text JSON.
 
-Sample output (scroll to the right for the comparison):
+Sample output (scroll right for the comparison):
 
 ```text
 === OSON versus Text BLOB benchmark results ===
