@@ -1,11 +1,11 @@
 # Oracle OSON vs. Text JSON Benchmark
 
-This repository compares Oracle Binary JSON (OSON) with UTF-8 textual JSON stored in `BLOB` columns. The included dataset contains 10,000 purchase-order documents, each larger than 4 KB.
+This repository compares Oracle Binary JSON (OSON) with UTF-8 textual JSON stored in `BLOB` columns. The included dataset is a 20 GiB NDJSON file containing 3,957,243 purchase-order documents, each larger than 4 KB.
 
 The workflow is:
 
 1. Create the OSON source table, `PO_OSON_OVER_4K`.
-2. Load `purchase_orders_over_4k.ndjson` with the included Python loader.
+2. Load [`purchase_orders_over_4k.ndjson`](https://objectstorage.eu-frankfurt-1.oraclecloud.com/p/ftNtV_-et7KNxeC3otmIY8hQRexb3Fm5uPBxt_04fMin7XnVxY2knO_zek2ucaW3/n/fro8fl9kuqli/b/bucket-for-ajd-data/o/purchase_orders_over_4k.ndjson) with the included Python loader.
 3. Run the SQL benchmark, which generates an equivalent text-JSON table and reports the results.
 
 ## Prerequisites
@@ -52,7 +52,7 @@ python3 oson_4k_loader/load_oson_ndjson.py \
 The loader converts every NDJSON document to OSON on the client and inserts it into `PO_OSON_OVER_4K`. It commits every 100 rows by default. A successful run ends with:
 
 ```text
-Loaded 10000 OSON documents into PO_OSON_OVER_4K.
+Loaded 3957243 OSON documents into PO_OSON_OVER_4K.
 ```
 
 Use a TNS alias instead of an Easy Connect string when appropriate:
